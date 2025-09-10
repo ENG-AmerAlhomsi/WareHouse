@@ -1,0 +1,53 @@
+{
+  "realm": "warehouse-dev",
+  "auth-server-url": "http://localhost:8081/",
+  "resource": "warehouse-backend",
+  "credentials": {
+    "secret": "ChOTlNSTtQGTmN8xMVyqS8f788MEBXbP"
+  },
+  "enforcement-mode": "ENFORCING",
+  "path-cache": {
+    "lifespan": 60000,
+    "max-entries": 1000
+  },
+  "paths": [
+    {
+      "name": "Public API Group",
+      "path": "/public/*",
+      "enforcement-mode": "DISABLED"
+    },
+    {
+      "path": "/swagger-ui/*",
+      "enforcement-mode": "DISABLED"
+    },
+    {
+      "path": "/v3/api-docs/*",
+      "enforcement-mode": "DISABLED"
+    },
+    {
+      "path": "/products/get/*",
+      "enforcement-mode": "DISABLED"
+    },
+    {
+      "path": "/products/paginated",
+      "enforcement-mode": "DISABLED"
+    },
+    {
+      "path": "/categories/get",
+      "enforcement-mode": "DISABLED"
+    },
+    {
+      "path": "/order/user/*",
+      "enforcement-mode": "DISABLED"
+    },
+    {
+      "path": "/order/user/paginated",
+      "enforcement-mode": "DISABLED"
+    }
+  ,
+    {
+      "path": "/actuator/*",
+      "enforcement-mode": "DISABLED"
+    }
+  ]
+}
