@@ -68,3 +68,4 @@ backend/build/
 logs/
 tmp/
 temp/
+.trae
