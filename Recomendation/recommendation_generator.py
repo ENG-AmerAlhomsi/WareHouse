@@ -75,8 +75,8 @@ class RecommendationGenerator:
                 
                 # Calculate business impact score
                 recommendation = {
-                    'cluster_id': cluster_id,
-                    'coherence_score': coherence_score,
+                    'cluster_id': int(cluster_id),
+                    'coherence_score': float(coherence_score),
                 }
                 
                 # Get product details from product_info for this cluster
@@ -91,15 +91,15 @@ class RecommendationGenerator:
                         
                         recommendation['total_quantity_sold'] = int(total_quantity)
                         recommendation['avg_unit_price'] = float(avg_unit_price)
-                        recommendation['recommendation_strength'] = coherence_score * np.log(total_quantity + 1)
+                        recommendation['recommendation_strength'] = float(coherence_score * np.log(total_quantity + 1))
                     else:
                         # Fallback to just coherence score if no product info
-                        recommendation['recommendation_strength'] = coherence_score
+                        recommendation['recommendation_strength'] = float(coherence_score)
                         recommendation['total_quantity_sold'] = 0
                         recommendation['avg_unit_price'] = 0.0
                 else:
                     # Fallback to just coherence score if no product info
-                    recommendation['recommendation_strength'] = coherence_score
+                    recommendation['recommendation_strength'] = float(coherence_score)
                     recommendation['total_quantity_sold'] = 0
                     recommendation['avg_unit_price'] = 0.0
                 
@@ -111,15 +111,15 @@ class RecommendationGenerator:
                         if not product_data.empty:
                             product_info = product_data.iloc[0]
                             product_dict = {
-                                'StockCode': stock_code,
-                                'Description': product_info['Description'],
+                                'StockCode': str(stock_code),
+                                'Description': str(product_info['Description']),
                                 'Quantity': int(product_info['TotalQuantity'])
                             }
                             recommendation['products'].append(product_dict)
                     else:
                         # Fallback if no product info available
                         product_dict = {
-                            'StockCode': stock_code,
+                            'StockCode': str(stock_code),
                             'Description': 'N/A',
                             'Quantity': 0
                         }

@@ -224,6 +224,74 @@ export const recommendationApi = {
   },
 };
 
+// AI Recommendation API endpoints (Python FastAPI)
+const aiApi = axios.create({
+  baseURL: 'http://localhost:8000', // Python FastAPI server
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
+export const aiRecommendationApi = {
+  // Health check
+  healthCheck: async () => {
+    const response = await aiApi.get('/health');
+    return response.data;
+  },
+
+  // Quick test
+  quickTest: async (params: {
+    limit?: number;
+    min_support?: number;
+    n_clusters?: number;
+    top_n?: number;
+    max_cluster_size?: number;
+    save_to_db?: boolean;
+  }) => {
+    const response = await aiApi.post('/test/quick', params);
+    return response.data;
+  },
+
+  // Full pipeline
+  fullPipeline: async (params: {
+    limit?: number;
+    min_support?: number;
+    n_clusters?: number;
+    top_n?: number;
+    max_cluster_size?: number;
+    save_to_db?: boolean;
+  }) => {
+    const response = await aiApi.post('/pipeline/full', params);
+    return response.data;
+  },
+
+  // Generate dendrogram
+  generateDendrogram: async (params: {
+    figsize_width?: number;
+    figsize_height?: number;
+    format?: 'png' | 'jpg' | 'svg' | 'pdf';
+    dpi?: number;
+  }) => {
+    const response = await aiApi.post('/visualizations/dendrogram', params, {
+      responseType: 'blob'
+    });
+    return response.data;
+  },
+
+  // Generate dashboard
+  generateDashboard: async (params: {
+    figsize_width?: number;
+    figsize_height?: number;
+    format?: 'png' | 'jpg' | 'svg' | 'pdf';
+    dpi?: number;
+  }) => {
+    const response = await aiApi.post('/visualizations/dashboard', params, {
+      responseType: 'blob'
+    });
+    return response.data;
+  },
+};
+
 // Category API endpoints
 export const categoryApi = {
   getAll: () => api.get('/categories/get'),

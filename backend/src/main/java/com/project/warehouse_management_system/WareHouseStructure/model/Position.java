@@ -1,5 +1,6 @@
-package com.project.warehouse_management_system.Inventory.model;
+package com.project.warehouse_management_system.WareHouseStructure.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -7,48 +8,40 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
-
 
 @Setter
 @Getter
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-@Table(name = "Product")
-public class Product {
-
+@Table(name = "Position")
+public class Position {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String name;
+    @Column(name = "position-name", nullable = false)
+    private String positionName;
 
-    @Column(length = 1000)
-    private String description;
+    @Column(name = "level", nullable = false)
+    private int level;
 
-    private double weight;
+    @Column(name = "is_empty")
+    private Boolean isEmpty;
 
-    private int quantityInStock;
-
-    @Column(nullable = false)
-    private BigDecimal unitPrice;
-
-    private String batchNumber;
+    @Column(name = "is_new")
+    private Boolean isNew = true;
 
     @ManyToOne
-    private Category category;
-
-    private String imageUrl;
+    private Bay bay;
 
     @CreatedDate
+    @JsonIgnore
     @Column(name = "created_at",nullable = false,updatable = false)
     private LocalDateTime createdAt;
 
     @LastModifiedDate
+    @JsonIgnore
     @Column(name = "last_modified",insertable = false)
     private LocalDateTime lastModified;
-
-    private boolean isActive;
 }

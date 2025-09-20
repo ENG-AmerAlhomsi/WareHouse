@@ -140,21 +140,35 @@ async def quick_test(request: QuickTestRequest):
             save_to_db=request.save_to_db
         )
         
+        # Convert numpy types to native Python types for JSON serialization
+        def convert_numpy_types(obj):
+            if hasattr(obj, 'item'):  # numpy scalar
+                return obj.item()
+            elif isinstance(obj, dict):
+                return {key: convert_numpy_types(value) for key, value in obj.items()}
+            elif isinstance(obj, list):
+                return [convert_numpy_types(item) for item in obj]
+            else:
+                return obj
+        
+        # Convert recommendations to serializable format
+        serializable_recommendations = convert_numpy_types(recommendations)
+        
         return ApiResponse(
             success=True,
             message=f"Quick test completed successfully with {len(recommendations)} recommendations",
             data={
-                "records_processed": len(df),
-                "recommendations_generated": len(recommendations),
+                "records_processed": int(len(df)),
+                "recommendations_generated": int(len(recommendations)),
                 "test_parameters": {
-                    "limit": request.limit,
-                    "min_support": request.min_support,
-                    "n_clusters": request.n_clusters,
-                    "top_n": request.top_n,
-                    "max_cluster_size": request.max_cluster_size,
-                    "save_to_db": request.save_to_db
+                    "limit": int(request.limit),
+                    "min_support": int(request.min_support),
+                    "n_clusters": int(request.n_clusters),
+                    "top_n": int(request.top_n),
+                    "max_cluster_size": int(request.max_cluster_size),
+                    "save_to_db": bool(request.save_to_db)
                 },
-                "recommendations": recommendations
+                "recommendations": serializable_recommendations
             }
         )
     except Exception as e:
@@ -196,13 +210,27 @@ async def run_full_pipeline(request: FullPipelineRequest):
             save_to_db=request.save_to_db
         )
         
+        # Convert numpy types to native Python types for JSON serialization
+        def convert_numpy_types(obj):
+            if hasattr(obj, 'item'):  # numpy scalar
+                return obj.item()
+            elif isinstance(obj, dict):
+                return {key: convert_numpy_types(value) for key, value in obj.items()}
+            elif isinstance(obj, list):
+                return [convert_numpy_types(item) for item in obj]
+            else:
+                return obj
+        
+        # Convert recommendations to serializable format
+        serializable_recommendations = convert_numpy_types(recommendations)
+        
         return ApiResponse(
             success=True,
             message="Full pipeline completed successfully",
             data={
-                "records_processed": len(df),
-                "recommendations_generated": len(recommendations),
-                "recommendations": recommendations
+                "records_processed": int(len(df)),
+                "recommendations_generated": int(len(recommendations)),
+                "recommendations": serializable_recommendations
             }
         )
     except Exception as e:

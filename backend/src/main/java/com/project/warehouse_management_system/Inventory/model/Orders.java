@@ -2,6 +2,8 @@ package com.project.warehouse_management_system.Inventory.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.project.warehouse_management_system.PurchaseOrder.model.PurchaseOrder;
+import com.project.warehouse_management_system.Shipment.model.Shipment;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

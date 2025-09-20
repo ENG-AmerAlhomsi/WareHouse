@@ -2,7 +2,7 @@ package com.project.warehouse_management_system.Inventory.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.warehouse_management_system.PurchaseOrder.model.PurchaseOrder;
-import com.project.warehouse_management_system.WareHouse.model.Position;
+import com.project.warehouse_management_system.WareHouseStructure.model.Position;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;

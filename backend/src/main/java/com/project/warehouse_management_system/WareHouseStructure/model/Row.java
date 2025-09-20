@@ -1,5 +1,6 @@
-package com.project.warehouse_management_system.Inventory.model;
+package com.project.warehouse_management_system.WareHouseStructure.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -7,48 +8,32 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
-
 
 @Setter
 @Getter
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-@Table(name = "Product")
-public class Product {
-
+@Table(name = "TheRow")
+public class Row {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String name;
-
-    @Column(length = 1000)
-    private String description;
-
-    private double weight;
-
-    private int quantityInStock;
-
-    @Column(nullable = false)
-    private BigDecimal unitPrice;
-
-    private String batchNumber;
+    @Column(name = "row-name", nullable = false)
+    private String rowName;
 
     @ManyToOne
-    private Category category;
-
-    private String imageUrl;
+    private Area area;
 
     @CreatedDate
+    @JsonIgnore
     @Column(name = "created_at",nullable = false,updatable = false)
     private LocalDateTime createdAt;
 
     @LastModifiedDate
+    @JsonIgnore
     @Column(name = "last_modified",insertable = false)
     private LocalDateTime lastModified;
 
-    private boolean isActive;
 }

@@ -11,9 +11,6 @@ import java.util.List;
 @Repository
 public interface PurchaseOrderRepo extends BaseRepo<PurchaseOrder, Long> {
     // Optimized queries with @Query annotation
-    @Query("SELECT po FROM PurchaseOrder po WHERE po.supplierName = :supplierName ORDER BY po.createdAt DESC")
-    List<PurchaseOrder> findBySupplierName(@Param("supplierName") String supplierName);
-    
     @Query("SELECT po FROM PurchaseOrder po WHERE po.status = :status ORDER BY po.createdAt DESC")
     List<PurchaseOrder> findByStatus(@Param("status") String status);
     
